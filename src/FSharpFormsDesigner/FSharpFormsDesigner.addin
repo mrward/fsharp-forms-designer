@@ -1,0 +1,29 @@
+﻿<AddIn
+	name = "F# Forms Designer"
+	author = "Matt Ward"
+	copyright   = "prj:///doc/copyright.txt"
+	description = "F# Windows Forms Designer">
+	
+	<Manifest>
+		<Identity name = "ICSharpCode.FSharpFormsDesigner"/>
+		<Dependency addin = "ICSharpCode.FormsDesigner" requirePreload = "true"/>
+	</Manifest>
+	
+	<Runtime>
+		<Import assembly = "FSharpFormsDesigner.dll"/>
+		<Import assembly = ":ICSharpCode.SharpDevelop"/>
+	</Runtime>
+	
+	<Path name = "/SharpDevelop/BackendBindings/Templates">
+		<Directory id = "FSharpWinForms" path = "./Templates" />
+	</Path>
+	
+	<Path name = "/SharpDevelop/Workbench/DisplayBindings">
+		<DisplayBinding
+			id = "FormsDesigner"
+			type  = "Secondary"
+			class = "ICSharpCode.FSharpFormsDesigner.FSharpFormsDesignerDisplayBinding"
+			fileNamePattern = "\.fs$"/>
+	</Path>
+	
+</AddIn>

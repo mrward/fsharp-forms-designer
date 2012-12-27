@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<Template
+	originator = "Matt Ward"
+	created = "26/12/2012"
+	lastModified = "26/12/2012">
+	
+	<TemplateConfiguration>
+		<Name>${res:Templates.Project.WindowsApplication.Name}</Name>
+		<Category>F#</Category>
+		<Icon>F#.Project.DOSProject</Icon>
+		<Description>${res:Templates.Project.WindowsApplication.Description}</Description>
+	</TemplateConfiguration>
+	
+	<Actions>
+		<Open filename = "Program.fs"/>
+	</Actions>
+	
+	<Project language = "F#">
+		<ProjectItems>
+			<Reference Include="System" />
+			<Reference Include="System.Data" />
+			<Reference Include="System.Drawing" />
+			<Reference Include="System.Windows.Forms" />
+			<Reference Include="System.Xml" />
+		</ProjectItems>
+		
+		<PropertyGroup>
+			<OutputType>WinExe</OutputType>
+		</PropertyGroup>
+		
+		<Files>
+			<File name="MainForm.fs"><![CDATA[namespace ${StandardNamespace}
+
+open System
+open System.Drawing
+open System.Windows.Forms
+
+type public MainForm() as this =
+    inherit Form()
+    
+    do
+        this.InitializeComponents()
+    
+    member this.InitializeComponents() =
+        this.AutoScaleMode <- System.Windows.Forms.AutoScaleMode.Font
+        this.Text <- "${ProjectName}"
+        this.Name <- "MainForm"
+    
+]]></File>
+			<File name="Program.fs"><![CDATA[namespace ${StandardNamespace}
+
+open System
+open System.Windows.Forms
+
+module Program =
+
+    [<STAThread>]
+    do
+        Application.EnableVisualStyles()
+        Application.SetCompatibleTextRenderingDefault(false)
+        Application.Run(new MainForm())
+]]></File>
+		</Files>
+	</Project>
+</Template>
