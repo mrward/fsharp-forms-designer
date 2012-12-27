@@ -4,6 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # SharpDevelop 4.3
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSharpFormsDesigner", "FSharpFormsDesigner\FSharpFormsDesigner.csproj", "{AC8FE097-5299-4F7E-A0A3-CC244F7E6891}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSharpFormsDesigner.Tests", "FSharpFormsDesigner.Tests\FSharpFormsDesigner.Tests.csproj", "{70C91091-A6FF-4E82-9E2F-33A06E64A4F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,5 +16,9 @@ Global
 		{AC8FE097-5299-4F7E-A0A3-CC244F7E6891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC8FE097-5299-4F7E-A0A3-CC244F7E6891}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC8FE097-5299-4F7E-A0A3-CC244F7E6891}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C91091-A6FF-4E82-9E2F-33A06E64A4F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C91091-A6FF-4E82-9E2F-33A06E64A4F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C91091-A6FF-4E82-9E2F-33A06E64A4F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C91091-A6FF-4E82-9E2F-33A06E64A4F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 EndGlobal

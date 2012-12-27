@@ -26,4 +26,11 @@
 			fileNamePattern = "\.fs$"/>
 	</Path>
 	
+	<Path name="/Workspace/Parser">
+		<Parser
+			id="FSharp"
+			supportedextensions=".fs"
+			projectfileextension=".fsproj"
+			class="ICSharpCode.FSharpFormsDesigner.FSharpParser"/>
+	</Path>
 </AddIn>
