@@ -7,14 +7,11 @@ using Microsoft.FSharp.Compiler.SourceCodeServices;
 
 namespace ICSharpCode.FSharpFormsDesigner
 {
-	public class FSharpClass : DefaultClass, IRegions
+	public class FSharpMethod : DefaultMethod, IRegions
 	{
-		TopLevelDeclaration topLevelDeclaration;
-		
-		public FSharpClass(ICompilationUnit compilationUnit, TopLevelDeclaration topLevelDeclaration)
-			: base(compilationUnit, topLevelDeclaration.Declaration.Name)
+		public FSharpMethod(IClass declaringType, DeclarationItem methodDeclaration)
+			: base(declaringType, methodDeclaration.Name)
 		{
-			this.topLevelDeclaration = topLevelDeclaration;
 		}
 	}
 }

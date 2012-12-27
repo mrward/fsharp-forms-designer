@@ -2,6 +2,7 @@
 // This code is distributed under the GNU LGPL (for details please see \doc\license.txt)
 
 using System;
+using ICSharpCode.NRefactory;
 using ICSharpCode.SharpDevelop.Dom;
 using Microsoft.FSharp.Compiler.SourceCodeServices;
 
@@ -12,6 +13,7 @@ namespace ICSharpCode.FSharpFormsDesigner
 		DefaultCompilationUnit compilationUnit;
 		FSharpNavigationItemsParser parser;
 		string source;
+		string[] lines;
 		
 		public FSharpClassParser(IProjectContent projectContent, string fileName, string source)
 		{
@@ -36,30 +38,24 @@ namespace ICSharpCode.FSharpFormsDesigner
 		void AddClass(TopLevelDeclaration topLevelDeclaration)
 		{
 			var fsharpClass = new FSharpClass(compilationUnit, topLevelDeclaration);
-			AddRegions(fsharpClass, topLevelDeclaration);
+			AddRegions(fsharpClass, topLevelDeclaration.Declaration);
 			AddMethods(fsharpClass, topLevelDeclaration);
 			compilationUnit.Classes.Add(fsharpClass);
 		}
 		
-		void AddRegions(FSharpClass fsharpClass, TopLevelDeclaration topLevelDeclaration)
+		int GetEndOfDeclarationHeader(int startLine)
 		{
-			Console.WriteLine("Class.Range: " + topLevelDeclaration.Declaration.Range);
-			Console.WriteLine("Class.BodyRange: " + topLevelDeclaration.Declaration.BodyRange);
-			
-			int startLine = topLevelDeclaration.Declaration.Range.Item1.Item2;
-			int endColumn = GetEndOfClassOrMethodHeader(startLine) + 1;
-			
-			fsharpClass.Region = new DomRegion(startLine, 1, startLine, endColumn);
-			
-			Tuple<int, int> end = topLevelDeclaration.Declaration.BodyRange.Item2;
-			fsharpClass.BodyRegion = new DomRegion(startLine, endColumn, end.Item2, end.Item1 + 1);
-		}
-		
-		int GetEndOfClassOrMethodHeader(int startLine)
-		{
-			string[] lines = source.Split('\n');
+			string[] lines = GetLines();
 			string line = lines[startLine - 1];
 			return line.IndexOf(')') + 1;
+		}
+		
+		string[] GetLines()
+		{
+			if (lines == null) {
+				lines = source.Split('\n');
+			}
+			return lines;
 		}
 		
 		void AddMethods(FSharpClass fsharpClass, TopLevelDeclaration topLevelDeclaration)
@@ -73,23 +69,19 @@ namespace ICSharpCode.FSharpFormsDesigner
 		
 		void AddMethod(FSharpClass fsharpClass, DeclarationItem methodDeclaration)
 		{
-			var method = new DefaultMethod(fsharpClass, methodDeclaration.Name);
-			AddMethodRegions(method, methodDeclaration);
+			var method = new FSharpMethod(fsharpClass, methodDeclaration);
+			AddRegions(method, methodDeclaration);
 			fsharpClass.Methods.Add(method);
 		}
 		
-		void AddMethodRegions(DefaultMethod method, DeclarationItem methodDeclaration)
+		void AddRegions(IRegions regions, DeclarationItem declarationItem)
 		{
-			Console.WriteLine("Method.Range: " + methodDeclaration.Range);
-			Console.WriteLine("Method.BodyRange: " + methodDeclaration.BodyRange);
+			Location headerStart = declarationItem.GetRangeStart();
+			int headerEndColumn = GetEndOfDeclarationHeader(headerStart.Line) + 1;
+			regions.Region = new DomRegion(headerStart.Line, 1, headerStart.Line, headerEndColumn);
 			
-			Tuple<int, int> start = methodDeclaration.Range.Item1;
-			int startLine = start.Item2;
-			int endColumn = GetEndOfClassOrMethodHeader(startLine) + 1;
-			method.Region = new DomRegion(startLine, 1, startLine, endColumn);
-			
-			Tuple<int, int> end= methodDeclaration.BodyRange.Item2;
-			method.BodyRegion = new DomRegion(startLine, endColumn, end.Item2, end.Item1 + 1);
+			Location bodyEnd = declarationItem.GetBodyRangeEnd();
+			regions.BodyRegion = new DomRegion(headerStart.Line, headerEndColumn, bodyEnd.Line, bodyEnd.Column);
 		}
 	}
 }
