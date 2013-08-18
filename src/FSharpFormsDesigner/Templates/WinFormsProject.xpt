@@ -28,6 +28,10 @@
 			<OutputType>WinExe</OutputType>
 		</PropertyGroup>
 		
+		<Imports clear="True">
+			<Import Project="$(MSBuildExtensionsPath32)\..\Microsoft F#\v4.0\Microsoft.FSharp.Targets" />
+		</Imports>
+		
 		<Files>
 			<File name="MainForm.fs"><![CDATA[namespace ${StandardNamespace}
 
