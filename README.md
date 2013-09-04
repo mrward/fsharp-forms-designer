@@ -1,5 +1,7 @@
 # F# WinForms Designer for SharpDevelop
 
+Currently at the early stages of development. Forms designer does not read or write F# code yet.
+
 Supports
 
  * F# 2.0
